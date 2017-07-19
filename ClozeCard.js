@@ -1,67 +1,58 @@
-// Create a new file named ClozeCard.js:
-// This file should define a Node module that exports a constructor for creating cloze-deletion flashcards, e.g.: module.exports = ClozeCard;
-// The constructor should accept two arguments: text and cloze.
-// The constructed object should have a cloze property that contains only the cloze-deleted portion of the text.
-// The constructed object should have a partial property that contains only the partial text.
-// The constructed object should have a fullText property that contains only the full text.
-// The constructor should throw or log an error when the cloze deletion does not appear in the input text.
-// Use prototypes to attach these methods, wherever possible.
-// var fs = require('fs');
-// var inquirer = require('inquirer');
-// module.exports = ClozeCard;
+//Allow the ClozeCard constructor to be accessible by another file/program
+module.exports = ClozeCard;
 
-
-
+//ClozeCard constructor creates a flash card
 function ClozeCard (text, cloze) {
-	this.cloze = cloze;
+	//Full text of the card with answer
 	this.text = text;
+	//Part of the text that will be removed and replaced with a '...' in the partial scenario
+	this.cloze = cloze;
+	//Report error if checkCloze on instance is false (meaning cloze is not in the text)
 	if (this.checkCloze() === false) {
-		throw this.cloze + " must be in the text. \n Text is:" + this.text;
+		throw this.cloze + " must be in the text.\nText is: " + this.text;
 	}
+	//Defines this.partial as the makePartial function value (... version of text with cloze removed)
 	this.partial = this.makePartial();
 }
 
+//Adds checkCloze function to constructor using prototype
 ClozeCard.prototype.checkCloze = function() {
+	//if cloze substring is in the text string that is what we are expecting
 	if (this.text.includes(this.cloze)) {
 		return true;
-		// console.log(this.cloze + " must be in the text. \n Text is:" + this.text);
+	// if cloze substring is NOT in the text string, that is unexpected
 	} else {
 		return false;
 	}
 };
 
+//Adds makePartial function to constructor
+//Replaces the close with '...'
 ClozeCard.prototype.makePartial = function() {
 	return this.text.replace(this.cloze, "...");
-
-
-}
-
+};
 
 
 try {
+	//instance geogeWashington which has the cloze in the text (no error should be reported)
 	var georgeWashington = new ClozeCard("George Washington was the first President of the USA","George Washington");
-
-	// var evilGeorge = new ClozeCard("George Washington was the first President of the USA","Evil George");
-
+	//instance evilGeorge which does NOT have the cloze in the text (error should occur)
+	var evilGeorge = new ClozeCard("George Washington was the first President of the USA","Evil George");
 	console.log(georgeWashington);
 	console.log(georgeWashington.checkCloze());
 	console.log(georgeWashington.makePartial());
 	console.log(georgeWashington.partial);
+	console.log(evilGeorge);
+	console.log(evilGeorge.checkCloze());
+	console.log(evilGeorge.makePartial());
+	console.log(evilGeorge.partial);
 
-
-	// console.log(evilGeorge);
-	// console.log(evilGeorge.checkCloze());
 
 } catch (e) {
 	console.log(e);
 }
 
-
-
-
-
-// }
-// Person.prototype.name = function() {
-//     return this.firstName + " " + this.lastName;
-// };
+console.log("georgeWashington Cloze: " + georgeWashington.cloze);
+console.log("georgeWashington Text: " + georgeWashington.text);
+console.log("georgeWashington Partial: " + georgeWashington.partial);
 
