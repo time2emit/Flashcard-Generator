@@ -1,15 +1,16 @@
-// Create a new file named BasicCard.js:
-// This file should define a Node module that exports a constructor for creating basic flashcards, e.g.: module.exports = BasicCard;
-// The constructor should accept two arguments: front and back.
-// The constructed object should have a front property that contains the text on the front of the card.
-// The constructed object should have a back property that contains the text on the back of the card.
-var fs = require('fs');
-var inquirer = require('inquirer');
+//Make BasicCard constructor exportable
 module.exports = BasicCard;
 
-var BasicCard = function (front, back) {
-	this.front = front;
-	this.back = back;
-}
+//BasicCard constructor creates the front and back text of a flashcard
+function BasicCard(front, back) {
+	//Text for front of card
+	this.front = front,
+	//Text for back of card
+	this.back = back,
+	//Print front and back of card
+	this.print = console.log("Front: " + this.front + "\nBack: " + this.back)
+};
 
-var card = new BasicCard;
+//Instances of BasicCard
+var humanBodayTrivia1 = new BasicCard("How many teeth does the average adult have?","32 teeth");
+var humanBodyTrivia2 = new BasicCard("How many chambers are in the average human heart?", "4 chambers");
